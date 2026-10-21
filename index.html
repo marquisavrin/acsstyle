@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ACSStyle | ACSS Frame Applier</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+</head>
+<body>
+
+    <div id="global-drop-shield" class="drop-shield">
+        <div class="shield-content">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            <p>Drop your photo anywhere to load</p>
+        </div>
+    </div>
+
+    <input type="file" id="image-input" accept="image/png, image/jpeg, image/webp" class="visually-hidden">
+
+    <div class="site-background">
+        <img id="bg-banner" src="" alt="Background">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">
+                <img id="app-logo" src="" alt="Logo" class="brand-logo">
+                <div class="brand-meta">
+                    <span class="brand-title">ACSStyle</span>
+                    <span class="brand-sub">The Official ACSS DP Frame Applier </span>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <span class="status-badge">Official Organization Tool</span>
+                <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="viewport">
+        <div class="studio-workspace">
+            
+            <div class="studio-stage">
+                <div class="master-viewport">
+                    <canvas id="master-canvas"></canvas>
+                    
+                    <label for="image-input" class="canvas-empty-state" id="canvas-empty-prompt">
+                        <div class="upload-circle">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                        </div>
+                        <span class="prompt-main">Click or drop photo here</span>
+                        <span class="prompt-sub">Supports JPG, PNG, or WEBP</span>
+                    </label>
+                </div>
+
+                <div class="stage-sub-actions">
+                    <label for="image-input" class="btn btn-ghost btn-sm" id="change-photo-btn" style="visibility: hidden;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        Replace Photo
+                    </label>
+                </div>
+            </div>
+
+            <div class="studio-sidebar">
+                <div class="sidebar-header">
+                    <h1 class="event-headline" id="hero-title"></h1>
+                    <p class="event-caption" id="hero-desc"></p>
+                </div>
+
+                <div class="tool-dock">
+                    <div class="tool-slider">
+                        <span class="tool-caption">Zoom</span>
+                        <input type="range" id="zoom-slider" min="0.1" max="3" step="0.01" value="1">
+                    </div>
+                    <div class="tool-actions">
+                        <button class="tool-btn" id="rotate-btn">Rotate 90°</button>
+                        <button class="tool-btn" id="flip-btn">Flip</button>
+                        <button class="tool-btn" id="reset-btn">Reset</button>
+                    </div>
+                </div>
+
+                <div class="frame-selector">
+                    <span class="selector-label">Choose Edition:</span>
+                    <div class="carousel-track" id="carousel-track"></div>
+                </div>
+
+                <button class="btn btn-primary btn-large" id="download-btn" disabled>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Download Profile Picture
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <span class="footer-org">Association of Computer Studies Students</span>
+                <span class="footer-sub">Cor Jesu College, Inc.</span>
+            </div>
+            <div class="footer-right">
+                <span class="dev-tag">Developed by <strong>Marquis Avrin Y. Montos</strong></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -60,7 +60,7 @@ function loadFrameOverlay(frameId) {
         img.set({ selectable: false, evented: false });
         cachedFrames[frameId] = img;
         masterCanvas.setOverlayImage(img, masterCanvas.renderAll.bind(masterCanvas));
-    });
+    }, { crossOrigin: 'anonymous' }); 
 }
 
 CONFIG.frames.forEach((frame, index) => {
@@ -263,6 +263,9 @@ downloadBtn.addEventListener('click', () => {
     link.click();
 });
 
+// ==========================================================================
+// 7. DEFENSIVE EXPORT CONTROLLER (Cross-Platform & Safe)
+// ==========================================================================
 const saveModal = document.getElementById('save-modal');
 const modalPreviewImg = document.getElementById('export-preview-img');
 const closeModalBtn = document.getElementById('close-modal-btn');
@@ -270,38 +273,59 @@ const closeModalBg = document.getElementById('close-modal-bg');
 const modalDoneBtn = document.getElementById('modal-done-btn');
 
 function closeModal() {
-    saveModal.style.display = 'none';
-    modalPreviewImg.src = "";
+    if (saveModal) saveModal.style.display = 'none';
+    if (modalPreviewImg) modalPreviewImg.src = "";
 }
 
-closeModalBtn.addEventListener('click', closeModal);
-closeModalBg.addEventListener('click', closeModal);
-modalDoneBtn.addEventListener('click', closeModal);
+if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+if (closeModalBg) closeModalBg.addEventListener('click', closeModal);
+if (modalDoneBtn) modalDoneBtn.addEventListener('click', closeModal);
 
-downloadBtn.addEventListener('click', () => {
-    if (!userPhotoObj) return;
+if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+        if (!userPhotoObj) {
+            alert("Please upload a photo first.");
+            return;
+        }
 
-    masterCanvas.discardActiveObject(); 
-    masterCanvas.renderAll();
+        const originalBtnContent = downloadBtn.innerHTML;
+        downloadBtn.innerHTML = `<span>Rendering 2000px HD...</span>`;
+        downloadBtn.style.opacity = "0.7";
+        downloadBtn.style.pointerEvents = "none";
 
-    const exportDataURL = masterCanvas.toDataURL({ 
-        format: 'png', 
-        multiplier: CONFIG.exportResolution / CONFIG.canvasSize 
+        setTimeout(() => {
+            try {
+                masterCanvas.discardActiveObject(); 
+                masterCanvas.renderAll();
+
+                const exportDataURL = masterCanvas.toDataURL({ 
+                    format: 'png', 
+                    multiplier: CONFIG.exportResolution / CONFIG.canvasSize 
+                });
+
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+                const isInAppBrowser = /FBAN|FBAV|Instagram|Messenger|Line/i.test(userAgent);
+
+                if ((isIOS || isInAppBrowser) && saveModal && modalPreviewImg) {
+                    modalPreviewImg.src = exportDataURL;
+                    saveModal.style.display = 'flex';
+                } else {
+                    const link = document.createElement('a');
+                    link.download = `ACSStyle_${CONFIG.eventName.replace(/\s+/g, '_')}_${currentFrameId.toUpperCase()}.png`;
+                    link.href = exportDataURL;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            } catch (err) {
+                console.error("Download Error:", err);
+                alert("Export Failed: " + err.message + "\n\nIf this mentions 'Tainted Canvas', ensure your frame images are stored in the same repository.");
+            } finally {
+                downloadBtn.innerHTML = originalBtnContent;
+                downloadBtn.style.opacity = "1";
+                downloadBtn.style.pointerEvents = "auto";
+            }
+        }, 50);
     });
-
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const isInAppBrowser = /FBAN|FBAV|Instagram|Messenger|Line/i.test(userAgent);
-
-    if (isIOS || isInAppBrowser) {
-        modalPreviewImg.src = exportDataURL;
-        saveModal.style.display = 'flex';
-    } else {
-        const link = document.createElement('a');
-        link.download = `ACSStyle_${CONFIG.eventName.replace(/\s+/g, '_')}_${currentFrameId.toUpperCase()}.png`;
-        link.href = exportDataURL;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-});
+}

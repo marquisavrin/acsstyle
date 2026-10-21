@@ -103,36 +103,33 @@
     </main>
 
     <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-left">
-                <span class="footer-org">Association of Computer Studies Students</span>
-                <span class="footer-sub">Cor Jesu College, Inc.</span>
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <span class="footer-org" id="app-org-footer"></span>
+                    <span class="footer-sub" id="app-college"></span>
+                </div>
+                <div class="footer-right">
+                    <span class="dev-tag">Developed by <strong>Marquis Avrin Y. Montos</strong></span>
+                </div>
             </div>
-            <div class="footer-right">
-                <span class="dev-tag">Developed by <strong>Marquis Avrin Y. Montos</strong></span>
+        </footer>
+
+        <div id="save-modal" class="save-modal" style="display: none;">
+            <div class="save-modal-backdrop" id="close-modal-bg"></div>
+            <div class="save-modal-dialog">
+                <div class="modal-header">
+                    <h3>Save Your Profile Picture</h3>
+                    <button class="modal-close-btn" id="close-modal-btn">&times;</button>
+                </div>
+                <p class="modal-tip">Press and hold the image below, then tap <strong>Save to Photos</strong>.</p>
+                <div class="modal-preview-mount">
+                    <img id="export-preview-img" alt="Final Rendered Avatar">
+                </div>
+                <button class="btn btn-secondary btn-large" id="modal-done-btn">Done</button>
             </div>
         </div>
-    </footer>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-</body>
-    <div id="save-modal" class="save-modal" style="display: none;">
-        <div class="save-modal-backdrop" id="close-modal-bg"></div>
-        <div class="save-modal-dialog">
-            <div class="modal-header">
-                <h3>Save Your Profile Picture</h3>
-                <button class="modal-close-btn" id="close-modal-btn">&times;</button>
-            </div>
-            <p class="modal-tip">Press and hold the image below, then tap <strong>Save to Photos</strong>.</p>
-            <div class="modal-preview-mount">
-                <img id="export-preview-img" alt="Final Rendered Avatar">
-            </div>
-            <button class="btn btn-secondary btn-large" id="modal-done-btn">Done</button>
-        </div>
-    </div>
-
-    <script src="config.js"></script>
-    <script src="script.js"></script>
-</body>
+        <script src="config.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>

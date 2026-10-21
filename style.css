@@ -255,9 +255,13 @@ input[type="range"] { flex-grow: 1; accent-color: var(--primary); cursor: pointe
 }
 
 .thumb-img {
-    width: 54px; height: 54px; /* Enlarged from 44px */
-    background-size: cover; background-position: center;
-    border-radius: 6px; background-color: #000;
+    width: 54px;
+    height: 54px;
+    background-size: contain; /* Changed from 'cover' so the character face isn't cropped */
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05); /* Soft translucent backing instead of #000 */
 }
 
 .thumb-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); }

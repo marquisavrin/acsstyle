@@ -44,38 +44,45 @@ masterCanvas.on('mouse:wheel', function(opt) {
 const cachedFrames = {};
 const carouselTrack = document.getElementById('carousel-track');
 
-CONFIG.frames.forEach((frame, index) => {
-    fabric.Image.fromURL(frame.file, function(img) {
+function loadFrameOverlay(frameId) {
+    currentFrameId = frameId;
+    
+    if (cachedFrames[frameId]) {
+        masterCanvas.setOverlayImage(cachedFrames[frameId], masterCanvas.renderAll.bind(masterCanvas));
+        return;
+    }
+
+    const frameData = CONFIG.frames.find(f => f.id === frameId);
+    if (!frameData) return;
+
+    fabric.Image.fromURL(frameData.file, function(img) {
         img.scaleToWidth(CONFIG.canvasSize);
         img.set({ selectable: false, evented: false });
-        cachedFrames[frame.id] = img;
-        
-        if (index === 0) {
-            masterCanvas.setOverlayImage(img, masterCanvas.renderAll.bind(masterCanvas));
-        }
+        cachedFrames[frameId] = img;
+        masterCanvas.setOverlayImage(img, masterCanvas.renderAll.bind(masterCanvas));
     });
+}
 
+CONFIG.frames.forEach((frame, index) => {
     const thumbBtn = document.createElement('button');
     thumbBtn.className = `thumb-btn ${index === 0 ? 'active' : ''}`;
     thumbBtn.style.setProperty('--faction-color', frame.color || 'var(--primary)');
     
-    const thumbAsset = frame.thumb || frame.file;
     thumbBtn.innerHTML = `
-        <div class="thumb-img" style="background-image: url('${thumbAsset}')"></div>
+        <div class="thumb-img" style="background-image: url('${frame.file}')"></div>
         <span class="thumb-label">${frame.title}</span>
     `;
     
     thumbBtn.onclick = () => {
         document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
         thumbBtn.classList.add('active');
-        currentFrameId = frame.id;
-        if (cachedFrames[frame.id]) {
-            masterCanvas.setOverlayImage(cachedFrames[frame.id], masterCanvas.renderAll.bind(masterCanvas));
-        }
+        loadFrameOverlay(frame.id);
     };
 
     carouselTrack.appendChild(thumbBtn);
 });
+
+loadFrameOverlay(CONFIG.frames[0].id);
 
 const dropShield = document.getElementById('global-drop-shield');
 let dragCounter = 0;

@@ -7,10 +7,10 @@ const CONFIG = {
     bannerFile: "banner.png",
 
     frames: [
-        { id: "freddy", title: "Freddy", file: "freddy.png", thumb: "freddy_thumb.png", color: "#f97316" },
-        { id: "foxy",   title: "Foxy",   file: "foxy.png",   thumb: "foxy_thumb.png",   color: "#ef4444" },
-        { id: "bonnie", title: "Bonnie", file: "bonnie.png", thumb: "bonnie_thumb.png", color: "#a855f7" },        
-        { id: "chica",  title: "Chica",  file: "chica.png",  thumb: "chica_thumb.png",  color: "#eab308" }
+        { id: "freddy", title: "Freddy", file: "freddy.png", color: "#f97316" },
+        { id: "foxy",   title: "Foxy",   file: "foxy.png",   color: "#ef4444" },
+        { id: "chica",  title: "Chica",  file: "chica.png",  color: "#eab308" },
+        { id: "bonnie", title: "Bonnie", file: "bonnie.png", color: "#a855f7" }
     ],
 
     exportResolution: 2000, 

@@ -262,3 +262,46 @@ downloadBtn.addEventListener('click', () => {
     });
     link.click();
 });
+
+const saveModal = document.getElementById('save-modal');
+const modalPreviewImg = document.getElementById('export-preview-img');
+const closeModalBtn = document.getElementById('close-modal-btn');
+const closeModalBg = document.getElementById('close-modal-bg');
+const modalDoneBtn = document.getElementById('modal-done-btn');
+
+function closeModal() {
+    saveModal.style.display = 'none';
+    modalPreviewImg.src = "";
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+closeModalBg.addEventListener('click', closeModal);
+modalDoneBtn.addEventListener('click', closeModal);
+
+downloadBtn.addEventListener('click', () => {
+    if (!userPhotoObj) return;
+
+    masterCanvas.discardActiveObject(); 
+    masterCanvas.renderAll();
+
+    const exportDataURL = masterCanvas.toDataURL({ 
+        format: 'png', 
+        multiplier: CONFIG.exportResolution / CONFIG.canvasSize 
+    });
+
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isInAppBrowser = /FBAN|FBAV|Instagram|Messenger|Line/i.test(userAgent);
+
+    if (isIOS || isInAppBrowser) {
+        modalPreviewImg.src = exportDataURL;
+        saveModal.style.display = 'flex';
+    } else {
+        const link = document.createElement('a');
+        link.download = `ACSStyle_${CONFIG.eventName.replace(/\s+/g, '_')}_${currentFrameId.toUpperCase()}.png`;
+        link.href = exportDataURL;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+});

@@ -117,4 +117,22 @@
     <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
+    <div id="save-modal" class="save-modal" style="display: none;">
+        <div class="save-modal-backdrop" id="close-modal-bg"></div>
+        <div class="save-modal-dialog">
+            <div class="modal-header">
+                <h3>Save Your Profile Picture</h3>
+                <button class="modal-close-btn" id="close-modal-btn">&times;</button>
+            </div>
+            <p class="modal-tip">Press and hold the image below, then tap <strong>Save to Photos</strong>.</p>
+            <div class="modal-preview-mount">
+                <img id="export-preview-img" alt="Final Rendered Avatar">
+            </div>
+            <button class="btn btn-secondary btn-large" id="modal-done-btn">Done</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>

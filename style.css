@@ -84,7 +84,7 @@ body {
 .site-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .bg-overlay {
     position: absolute; inset: 0; background-color: var(--bg-overlay);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
     transition: background-color 0.3s;
 }
 
@@ -320,4 +320,89 @@ input[type="range"] { flex-grow: 1; accent-color: var(--primary); cursor: pointe
     .studio-sidebar { max-width: 320px; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
     .topbar-right .status-badge { display: none; }
+}
+
+.save-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.save-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.save-modal-dialog {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 380px;
+    background-color: var(--surface);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.modal-header h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.modal-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.modal-tip {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.modal-tip strong {
+    color: var(--primary);
+}
+
+.modal-preview-mount {
+    width: 260px;
+    height: 260px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background-color: #000;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.modal-preview-mount img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    -webkit-touch-callout: default !important; /* CRITICAL: Enables iOS native long-press save menu */
 }

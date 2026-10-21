@@ -250,22 +250,6 @@ document.getElementById('reset-btn').addEventListener('click', () => {
     updateCoverGeometry();
 });
 
-downloadBtn.addEventListener('click', () => {
-    if (!userPhotoObj) return;
-    masterCanvas.discardActiveObject(); 
-    masterCanvas.renderAll();
-    const link = document.createElement('a');
-    link.download = `ACSStyle_${CONFIG.eventName.replace(/\s+/g, '_')}_${currentFrameId.toUpperCase()}.png`;
-    link.href = masterCanvas.toDataURL({ 
-        format: 'png', 
-        multiplier: CONFIG.exportResolution / CONFIG.canvasSize 
-    });
-    link.click();
-});
-
-// ==========================================================================
-// 7. DEFENSIVE EXPORT CONTROLLER (Cross-Platform & Safe)
-// ==========================================================================
 const saveModal = document.getElementById('save-modal');
 const modalPreviewImg = document.getElementById('export-preview-img');
 const closeModalBtn = document.getElementById('close-modal-btn');

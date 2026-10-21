@@ -1,7 +1,7 @@
 const CONFIG = {
     forceTheme: "dark", 
     eventName: "Programmer's Day 2026",
-    eventSubtitle: "Select your animatronic and download your avatar.",
+    eventSubtitle: "Upload your photo. Select your animatronic and download your avatar.",
 
     logoFile: "logo.png",
     bannerFile: "banner.png",
@@ -12,7 +12,7 @@ const CONFIG = {
         { id: "chica",  title: "Chica",  file: "chica.png",  color: "#eab308" },
         { id: "bonnie", title: "Bonnie", file: "bonnie.png", color: "#a855f7" }
     ],
-
+    
     exportResolution: 2000, 
     canvasSize: 320,        
     maxSafeDimension: 2500, 
